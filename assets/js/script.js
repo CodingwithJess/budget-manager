@@ -1,17 +1,8 @@
-// ======================
-// VARIABLES
-// ======================
 
-// 1st: pull initial budgetItems/lastID from localStorage to set initial variables
 let budgetItems = JSON.parse(localStorage.getItem("budgetItems")) || [];
 let lastID = localStorage.getItem("lastID") || 0;
 
 
-// ======================
-// FUNCTIONS
-// ======================
-
-// 4th: function to update localStorage with latest budgetItems and latest lastID
 const updateStorage = () => {
   localStorage.setItem("budgetItems", JSON.stringify(budgetItems));
   localStorage.setItem("lastID", lastID);
@@ -28,7 +19,6 @@ const renderItems = (items) => {
   }
 
   $("#total").text(`$${total.toFixed(2)}`)
-
 }
 
 $("#toggleFormButton, #hideForm").click(function(){
@@ -59,7 +49,6 @@ $("#addItem").click(function(event){
   renderItems();
 })
 
-// 6th: wire up change event on the category select menu, show filtered budgetItems based on selection
 $("#categoryFilter").change(function(){
   const category = $(this).val();
 
@@ -71,14 +60,13 @@ $("#categoryFilter").change(function(){
   }
 });
 
-// 7th: wire up click event on the delete button of a given row; on click delete that budgetItem
-
 $("#budgetItems").on("click", ".delete", function(){
   const id = $(this).parents("tr").data("id");
   const remainingItems = budgetItems.filter ((item) => item.id !== id);
   budgetItems = remainingItems;
   updateStorage();
   renderItems();
+  $("#categoryFilter").val("");
 })
 
 renderItems();
